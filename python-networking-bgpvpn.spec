@@ -1,4 +1,3 @@
-# Created by pyp2rpm-3.1.3
 %global pypi_name networking-bgpvpn
 
 Name:           python-%{pypi_name}
@@ -6,7 +5,7 @@ Version:        4.0.1
 Release:        1%{?dist}
 Summary:        API and Framework to interconnect bgpvpn to neutron networks
 
-License:        UNKNOWN
+License:        ASL 2.0
 URL:            http://www.openstack.org/
 Source0:        https://files.pythonhosted.org/packages/source/n/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
 BuildArch:      noarch
