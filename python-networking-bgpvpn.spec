@@ -1,5 +1,5 @@
 %global pypi_name networking-bgpvpn
-%global upstream_version %{version}%{?milestone}
+%{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:           python-%{pypi_name}
 Version:        4.0.1
@@ -11,8 +11,6 @@ URL:            http://www.openstack.org/
 Source0:        https://files.pythonhosted.org/packages/source/n/%{pypi_name}/%{pypi_name}-%{upstream_version}.tar.gz
 BuildArch:      noarch
  
-BuildConflicts: python-sphinx = 1.2.0
-BuildConflicts: python-sphinx = 1.3b1
 BuildRequires:  python-webob >= 1.2.3
 BuildRequires:  python-webtest >= 2.0
 BuildRequires:  python-coverage >= 3.6
@@ -29,7 +27,8 @@ BuildRequires:  python-testrepository >= 0.0.18
 BuildRequires:  python-testscenarios >= 0.4
 BuildRequires:  python-testtools >= 1.4.0
 BuildRequires:  python2-devel
-BuildRequires:  python-sphinx
+BuildRequires:  python2-sphinxcontrib-blockdiag >= 1.5.5
+BuildRequires:  python2-sphinxcontrib-seqdiag >= 0.8.4
 
 %description
  BGPMPLS VPN Extension for OpenStack Networking This project provides an API
@@ -86,10 +85,11 @@ rm -rf html/.{doctrees,buildinfo}
 %doc README.rst networking_bgpvpn_tempest/README.rst
 %{python2_sitelib}/%{pypi_name}
 %{python2_sitelib}/networking_bgpvpn_tempest
-%{python2_sitelib}/networking_bgpvpn-%{version}-py?.?.egg-info
+%{python2_sitelib}/networking_bgpvpn-*.egg-info
 
 %files -n python-%{pypi_name}-doc
 %doc html 
+%license LICENSE
 
 %changelog
 * Thu Sep 15 2016 Ricardo Noriega <rnoriega@redhat.com> - 4.0.1-1
