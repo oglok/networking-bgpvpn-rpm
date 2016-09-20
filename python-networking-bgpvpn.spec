@@ -1,4 +1,5 @@
 %global pypi_name networking-bgpvpn
+%global upstream_version %{version}%{?milestone}
 
 Name:           python-%{pypi_name}
 Version:        4.0.1
@@ -7,25 +8,21 @@ Summary:        API and Framework to interconnect bgpvpn to neutron networks
 
 License:        ASL 2.0
 URL:            http://www.openstack.org/
-Source0:        https://files.pythonhosted.org/packages/source/n/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
+Source0:        https://files.pythonhosted.org/packages/source/n/%{pypi_name}/%{pypi_name}-%{upstream_version}.tar.gz
 BuildArch:      noarch
  
 BuildConflicts: python-sphinx = 1.2.0
 BuildConflicts: python-sphinx = 1.3b1
-BuildRequires:  python-WebOb >= 1.2.3
-BuildRequires:  python-WebTest >= 2.0
+BuildRequires:  python-webob >= 1.2.3
+BuildRequires:  python-webtest >= 2.0
 BuildRequires:  python-coverage >= 3.6
-BuildRequires:  python-discover
-BuildRequires:  python-hacking < 0.11
 BuildRequires:  python-hacking >= 0.10.0
-BuildRequires:  python-networking >= bagpipe
-BuildRequires:  python-networking >= odl
-BuildRequires:  python-oslosphinx >= 2.5.0
+BuildRequires:  python-networking-odl
+BuildRequires:  python-oslo-sphinx >= 2.5.0
 BuildRequires:  python-oslotest >= 1.10.0
 BuildRequires:  python-pbr >= 1.8
 BuildRequires:  python-reno >= 0.1.1
 BuildRequires:  python-setuptools
-BuildRequires:  python-sphinx < 1.3
 BuildRequires:  python-sphinx >= 1.1.2
 BuildRequires:  python-subunit >= 0.0.18
 BuildRequires:  python-testrepository >= 0.0.18
@@ -69,7 +66,7 @@ Summary:        networking-bgpvpn documentation
 Documentation for networking-bgpvpn
 
 %prep
-%autosetup -n %{pypi_name}-%{version}
+%autosetup -n %{pypi_name}-%{upstream_version}
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
 
