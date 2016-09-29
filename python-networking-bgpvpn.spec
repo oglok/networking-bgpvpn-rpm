@@ -48,6 +48,7 @@ Summary:        API and Framework to interconnect bgpvpn to neutron networks
 %{?python_provide:%python_provide python2-%{pypi_name}}
  
 Requires:       python-webob >= 1.2.3
+Requires:       python-webtest >= 2.0
 Requires:       python-pbr >= 1.6
 Requires:       python-babel >= 1.3
 Requires:       python-oslo-config >= 2.3.0
