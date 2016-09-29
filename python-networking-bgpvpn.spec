@@ -1,4 +1,5 @@
 %global pypi_name networking-bgpvpn
+%global upstream_version 4.0.1.dev93
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:           python-%{pypi_name}
@@ -16,19 +17,23 @@ BuildRequires:  python-webtest >= 2.0
 BuildRequires:  python-coverage >= 3.6
 BuildRequires:  python-hacking >= 0.10.0
 BuildRequires:  python-networking-odl
+BuildRequires:  python-networking-bagpipe
+BuildRequires:  python-neutron-tests
+BuildRequires:  python-neutron
 BuildRequires:  python-oslo-sphinx >= 2.5.0
 BuildRequires:  python-oslotest >= 1.10.0
 BuildRequires:  python-pbr >= 1.8
 BuildRequires:  python-reno >= 0.1.1
 BuildRequires:  python-setuptools
 BuildRequires:  python-sphinx >= 1.1.2
+BuildRequires:  python-sphinxcontrib-blockdiag
+BuildRequires:  python-sphinxcontrib-seqdiag
 BuildRequires:  python-subunit >= 0.0.18
 BuildRequires:  python-testrepository >= 0.0.18
+BuildRequires:  python-testresources
 BuildRequires:  python-testscenarios >= 0.4
 BuildRequires:  python-testtools >= 1.4.0
 BuildRequires:  python2-devel
-BuildRequires:  python2-sphinxcontrib-blockdiag
-BuildRequires:  python2-sphinxcontrib-seqdiag
 
 %description
  BGPMPLS VPN Extension for OpenStack Networking This project provides an API
@@ -42,8 +47,9 @@ provided ...
 Summary:        API and Framework to interconnect bgpvpn to neutron networks
 %{?python_provide:%python_provide python2-%{pypi_name}}
  
+Requires:       python-webob >= 1.2.3
 Requires:       python-pbr >= 1.6
-Requires:       python-Babel >= 1.3
+Requires:       python-babel >= 1.3
 Requires:       python-oslo-config >= 2.3.0
 Requires:       python-oslo-db >= 2.4.1
 Requires:       python-oslo-log >= 1.8.0
@@ -107,5 +113,5 @@ rm -rf html/.{doctrees,buildinfo}
 %{python2_sitelib}/%{module}/tests
 
 %changelog
-* Thu Sep 15 2016 Ricardo Noriega <rnoriega@redhat.com> - 4.0.1-1
+* Thu Sep 15 2016 Ricardo Noriega <rnoriega@redhat.com> - Master
 - Initial package.
