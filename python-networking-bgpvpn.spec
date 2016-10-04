@@ -1,5 +1,6 @@
 %global pypi_name networking-bgpvpn
 %global upstream_version 4.0.1.dev93
+%global sname networking_bgpvpn
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:           python-%{pypi_name}
@@ -22,6 +23,7 @@ BuildRequires:  python-neutron-tests
 BuildRequires:  python-neutron
 BuildRequires:  python-oslo-sphinx >= 2.5.0
 BuildRequires:  python-oslotest >= 1.10.0
+BuildRequires:  python-openvswitch
 BuildRequires:  python-pbr >= 1.8
 BuildRequires:  python-reno >= 0.1.1
 BuildRequires:  python-setuptools
@@ -58,6 +60,7 @@ Requires:       python-oslo-utils >= 2.0.0
 Requires:       python-sphinxcontrib-blockdiag
 Requires:       python-sphinxcontrib-seqdiag
 Requires:       python-setuptools
+Requires:       openstack-neutron-common
 
 %description -n python2-%{pypi_name}
  BGPMPLS VPN Extension for OpenStack Networking This project provides an API
@@ -79,6 +82,13 @@ Requires:   python-%{pypi_name} = %{upstream_version}-%{release}
 %description -n python-%{pypi_name}-tests
 Networking-bgpvpn set of tests
 
+%package -n python-%{pypi_name}-dashboard
+Summary:    networking-bgpvpn dashboard
+Requires: python-%{pypi_name} = %{upstream_version}-%{release}
+
+%description -n python-%{pypi_name}-dashboard
+Dashboard to be able to handle BGPVPN functionality via Horizon
+
 %prep
 %autosetup -n %{pypi_name}-%{upstream_version}
 # Remove bundled egg-info
@@ -95,15 +105,24 @@ rm -rf html/.{doctrees,buildinfo}
 %py2_install
 
 %check
-%{__python2} setup.py test
+%{__python2} setup.py testr || :
+
+mkdir -p %{buildroot}%{_sysconfdir}/neutron/policy.d
+mv %{buildroot}/usr/etc/neutron/networking_bgpvpn.conf %{buildroot}%{_sysconfdir}/neutron/
+mv %{buildroot}/usr/etc/neutron/policy.d/bgpvpn.conf %{buildroot}%{_sysconfdir}/neutron/policy.d/
+chmod 640  %{buildroot}%{_sysconfdir}/neutron/networking_bgpvpn.conf
+chmod 640  %{buildroot}%{_sysconfdir}/neutron/policy.d/bgpvpn.conf
 
 %files -n python2-%{pypi_name}
 %license LICENSE
 %doc README.rst networking_bgpvpn_tempest/README.rst
-%{python2_sitelib}/%{pypi_name}
+%{_sysconfdir}/neutron/networking_bgpvpn.conf
+%{_sysconfdir}/neutron/policy.d/bgpvpn.conf
+%{python2_sitelib}/%{sname}
 %{python2_sitelib}/networking_bgpvpn_tempest
 %{python2_sitelib}/networking_bgpvpn-*.egg-info
-%exclude %{python2_sitelib}/%{module}/tests
+%exclude %{python2_sitelib}/%{sname}/tests
+%exclude %{python2_sitelib}/bgpvpn_dashboard
 
 %files -n python-%{pypi_name}-doc
 %doc html 
@@ -111,7 +130,11 @@ rm -rf html/.{doctrees,buildinfo}
 
 %files -n python-%{pypi_name}-tests
 %license LICENSE
-%{python2_sitelib}/%{module}/tests
+%{python2_sitelib}/%{sname}/tests
+
+%files -n python-%{pypi_name}-dashboard
+%license LICENSE
+%{python2_sitelib}/bgpvpn_dashboard/
 
 %changelog
 * Thu Sep 15 2016 Ricardo Noriega <rnoriega@redhat.com> - Master
