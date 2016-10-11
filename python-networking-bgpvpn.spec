@@ -1,11 +1,10 @@
 %global pypi_name networking-bgpvpn
-%global upstream_version 4.0.1.dev93
 %global sname networking_bgpvpn
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:           python-%{pypi_name}
-Version:        4.0.1
-Release:        1%{?dist}
+Version:        XXX
+Release:        XXX
 Summary:        API and Framework to interconnect bgpvpn to neutron networks
 
 License:        ASL 2.0
@@ -77,14 +76,16 @@ Documentation for networking-bgpvpn
 
 %package -n python-%{pypi_name}-tests
 Summary:        networking-bgpvpn tests
-Requires:   python-%{pypi_name} = %{upstream_version}-%{release}
+#Requires:   python-%{pypi_name} = %{upstream_version}-%{release}
+Requires:   python-%{pypi_name} = %{version}-%{release}
 
 %description -n python-%{pypi_name}-tests
 Networking-bgpvpn set of tests
 
 %package -n python-%{pypi_name}-dashboard
 Summary:    networking-bgpvpn dashboard
-Requires: python-%{pypi_name} = %{upstream_version}-%{release}
+#Requires: python-%{pypi_name} = %{upstream_version}-%{release}
+Requires: python-%{pypi_name} = %{version}-%{release}
 
 %description -n python-%{pypi_name}-dashboard
 Dashboard to be able to handle BGPVPN functionality via Horizon
@@ -137,5 +138,5 @@ chmod 640  %{buildroot}%{_sysconfdir}/neutron/policy.d/bgpvpn.conf
 %{python2_sitelib}/bgpvpn_dashboard/
 
 %changelog
-* Thu Sep 15 2016 Ricardo Noriega <rnoriega@redhat.com> - Master
+* Thu Sep 15 2016 Ricardo Noriega <rnoriega@redhat.com> - 4.0.1
 - Initial package.
