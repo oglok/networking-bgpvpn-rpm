@@ -12,37 +12,37 @@ URL:            http://www.openstack.org/
 Source0:        https://files.pythonhosted.org/packages/source/n/%{pypi_name}/%{pypi_name}-%{upstream_version}.tar.gz
 BuildArch:      noarch
  
-BuildRequires:  python-webob >= 1.2.3
-BuildRequires:  python-webtest >= 2.0
-BuildRequires:  python-coverage >= 3.6
-BuildRequires:  python-hacking >= 0.10.0
+BuildRequires:  python-webob
+BuildRequires:  python-webtest
+BuildRequires:  python-coverage
+BuildRequires:  python-hacking
 BuildRequires:  python-networking-odl
 BuildRequires:  python-networking-bagpipe
 BuildRequires:  python-neutron-tests
 BuildRequires:  python-neutron
-BuildRequires:  python-oslo-sphinx >= 2.5.0
-BuildRequires:  python-oslotest >= 1.10.0
+BuildRequires:  python-oslo-sphinx
+BuildRequires:  python-oslotest
 BuildRequires:  python-openvswitch
-BuildRequires:  python-pbr >= 1.8
-BuildRequires:  python-reno >= 0.1.1
+BuildRequires:  python-pbr
+BuildRequires:  python-reno
 BuildRequires:  python-setuptools
-BuildRequires:  python-sphinx >= 1.1.2
+BuildRequires:  python-sphinx
 BuildRequires:  python-sphinxcontrib-blockdiag
 BuildRequires:  python-sphinxcontrib-seqdiag
-BuildRequires:  python-subunit >= 0.0.18
-BuildRequires:  python-testrepository >= 0.0.18
+BuildRequires:  python-subunit
+BuildRequires:  python-testrepository
 BuildRequires:  python-testresources
-BuildRequires:  python-testscenarios >= 0.4
-BuildRequires:  python-testtools >= 1.4.0
+BuildRequires:  python-testscenarios
+BuildRequires:  python-testtools
 BuildRequires:  python2-devel
 
 %description
- BGPMPLS VPN Extension for OpenStack Networking This project provides an API
-and Framework to interconnect BGP/MPLS VPNs to Openstack Neutron networks,
-routers and ports.The Border Gateway Protocol and MultiProtocol Label Switching
-are widely used Wide Area Networking technologies. The primary purpose of this
+BGPMPLS VPN Extension for OpenStack Networking This project provides an API and
+Framework to interconnect BGP/MPLS VPNs to Openstack Neutron networks, routers
+and ports.The Border Gateway Protocol and MultiProtocol Label Switching are
+widely used Wide Area Networking technologies. The primary purpose of this
 project is to allow attachment of Neutron networks and/or routers to carrier
-provided ...
+provided.
 
 %package -n     python2-%{pypi_name}
 Summary:        API and Framework to interconnect bgpvpn to neutron networks
@@ -62,12 +62,12 @@ Requires:       python-setuptools
 Requires:       openstack-neutron-common
 
 %description -n python2-%{pypi_name}
- BGPMPLS VPN Extension for OpenStack Networking This project provides an API
-and Framework to interconnect BGP/MPLS VPNs to Openstack Neutron networks,
-routers and ports.The Border Gateway Protocol and MultiProtocol Label Switching
-are widely used Wide Area Networking technologies. The primary purpose of this
+BGPMPLS VPN Extension for OpenStack Networking This project provides an API and
+Framework to interconnect BGP/MPLS VPNs to Openstack Neutron networks, routers
+and ports.The Border Gateway Protocol and MultiProtocol Label Switching are
+widely used Wide Area Networking technologies. The primary purpose of this
 project is to allow attachment of Neutron networks and/or routers to carrier
-provided ...
+provided.
 
 %package -n python-%{pypi_name}-doc
 Summary:        networking-bgpvpn documentation
@@ -76,7 +76,6 @@ Documentation for networking-bgpvpn
 
 %package -n python-%{pypi_name}-tests
 Summary:        networking-bgpvpn tests
-#Requires:   python-%{pypi_name} = %{upstream_version}-%{release}
 Requires:   python-%{pypi_name} = %{version}-%{release}
 
 %description -n python-%{pypi_name}-tests
@@ -84,7 +83,6 @@ Networking-bgpvpn set of tests
 
 %package -n python-%{pypi_name}-dashboard
 Summary:    networking-bgpvpn dashboard
-#Requires: python-%{pypi_name} = %{upstream_version}-%{release}
 Requires: python-%{pypi_name} = %{version}-%{release}
 
 %description -n python-%{pypi_name}-dashboard
@@ -105,14 +103,14 @@ rm -rf html/.{doctrees,buildinfo}
 %install
 %py2_install
 
-%check
-%{__python2} setup.py testr || :
-
 mkdir -p %{buildroot}%{_sysconfdir}/neutron/policy.d
 mv %{buildroot}/usr/etc/neutron/networking_bgpvpn.conf %{buildroot}%{_sysconfdir}/neutron/
 mv %{buildroot}/usr/etc/neutron/policy.d/bgpvpn.conf %{buildroot}%{_sysconfdir}/neutron/policy.d/
 chmod 640  %{buildroot}%{_sysconfdir}/neutron/networking_bgpvpn.conf
 chmod 640  %{buildroot}%{_sysconfdir}/neutron/policy.d/bgpvpn.conf
+
+%check
+%{__python2} setup.py testr 
 
 %files -n python2-%{pypi_name}
 %license LICENSE
