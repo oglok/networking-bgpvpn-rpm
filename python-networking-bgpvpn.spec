@@ -3,8 +3,8 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:           python-%{pypi_name}
-Version:        XXX
-Release:        XXX
+Version:        5.0.1
+Release:        dev6
 Summary:        API and Framework to interconnect bgpvpn to neutron networks
 
 License:        ASL 2.0
@@ -29,8 +29,8 @@ BuildRequires:  python-pbr
 BuildRequires:  python-reno
 BuildRequires:  python-setuptools
 BuildRequires:  python-sphinx
-#BuildRequires:  python-sphinxcontrib-blockdiag
-#BuildRequires:  python-sphinxcontrib-seqdiag
+BuildRequires:  python-sphinxcontrib-blockdiag
+BuildRequires:  python-sphinxcontrib-seqdiag
 BuildRequires:  python-subunit
 BuildRequires:  python-testrepository
 BuildRequires:  python-testresources
@@ -115,8 +115,6 @@ rm -rf html/.{doctrees,buildinfo}
 mkdir -p %{buildroot}%{_sysconfdir}/neutron/policy.d
 mv %{buildroot}/usr/etc/neutron/networking_bgpvpn.conf %{buildroot}%{_sysconfdir}/neutron/
 mv %{buildroot}/usr/etc/neutron/policy.d/bgpvpn.conf %{buildroot}%{_sysconfdir}/neutron/policy.d/
-chmod 640  %{buildroot}%{_sysconfdir}/neutron/networking_bgpvpn.conf
-chmod 640  %{buildroot}%{_sysconfdir}/neutron/policy.d/bgpvpn.conf
 
 %check
 %{__python2} setup.py testr
@@ -124,16 +122,16 @@ chmod 640  %{buildroot}%{_sysconfdir}/neutron/policy.d/bgpvpn.conf
 %files -n python2-%{pypi_name}
 %license LICENSE
 %doc README.rst
-%{_sysconfdir}/neutron/networking_bgpvpn.conf
-%{_sysconfdir}/neutron/policy.d/bgpvpn.conf
 %{python2_sitelib}/%{sname}
 %{python2_sitelib}/networking_bgpvpn_tempest
 %{python2_sitelib}/networking_bgpvpn-*.egg-info
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/networking_bgpvpn.conf
+%config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/policy.d/bgpvpn.conf
 %exclude %{python2_sitelib}/%{sname}/tests
 %exclude %{python2_sitelib}/bgpvpn_dashboard
 
 %files -n python-%{pypi_name}-doc
-#%doc html
+%doc html
 %license LICENSE
 
 %files -n python-%{pypi_name}-tests
