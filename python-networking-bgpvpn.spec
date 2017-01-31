@@ -105,7 +105,7 @@ rm -rf %{pypi_name}.egg-info
 # generate html docs
 # TODO: the doc generation is commented until python-sphinxcontrib-* packages
 # are included in CBS. This needs to be fixed.
-#%{__python2} setup.py build_sphinx
+%{__python2} setup.py build_sphinx
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 
@@ -117,7 +117,7 @@ mv %{buildroot}/usr/etc/neutron/networking_bgpvpn.conf %{buildroot}%{_sysconfdir
 mv %{buildroot}/usr/etc/neutron/policy.d/bgpvpn.conf %{buildroot}%{_sysconfdir}/neutron/policy.d/
 
 %check
-%{__python2} setup.py testr
+PYTHONPATH=. /usr/bin/python2 setup.py testr
 
 %files -n python2-%{pypi_name}
 %license LICENSE
@@ -129,9 +129,10 @@ mv %{buildroot}/usr/etc/neutron/policy.d/bgpvpn.conf %{buildroot}%{_sysconfdir}/
 %config(noreplace) %attr(0640, root, neutron) %{_sysconfdir}/neutron/policy.d/bgpvpn.conf
 %exclude %{python2_sitelib}/%{sname}/tests
 %exclude %{python2_sitelib}/bgpvpn_dashboard
+%exclude %{python2_sitelib}/networking_bgpvpn_heat
 
 %files -n python-%{pypi_name}-doc
-%doc html
+#%doc html
 %license LICENSE
 
 %files -n python-%{pypi_name}-tests
